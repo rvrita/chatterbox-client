@@ -21,7 +21,9 @@ var App = {
     Parse.readAll((data) => {
       // examine the response from the server request:
       console.log(data);
-
+      for (var i = 0; i < 5; i++) {
+        $('#chats').append(`<p>${data.results[i].text}</p>`);
+      }
       callback();
     });
   },
