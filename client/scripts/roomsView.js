@@ -2,9 +2,24 @@ var RoomsView = {
 
   $button: $('#rooms button'),
   $select: $('#rooms select'),
+  $submit: $('#form room-submit'),
 
   initialize: function() {
+    RoomsView.$button.on('click', RoomsView.addRoom);
+    RoomsView.$submit.on('click', RoomsView.roomSubmit);
   },
+
+
+  addRoom: function() {
+    $('.room-submit').toggle();
+    $('#room').toggle();
+
+  },
+  roomSubmit: function(event) {
+    event.preventDefault();
+    alert('hi');
+  },
+
 
 
   render: _.template(

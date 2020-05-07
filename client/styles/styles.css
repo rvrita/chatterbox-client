@@ -51,6 +51,13 @@ form {
     padding-left: 0;
     margin-bottom: 20px;
 }
+#room {
+    display: none;
+    margin-bottom: 10px;
+}
+.room-submit {
+    display: none;
+}
 
 form input[type=text] {
     margin-right: 10px;
