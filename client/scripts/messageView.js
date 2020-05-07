@@ -9,7 +9,7 @@ var MessageView = {
         <%= htmlEncode(text) %>
         </div>
         <div class="timestamp">
-          <%= createdAt %>
+          <%= formattedDate(createdAt) %>
         </div>
       </div>
     `)
@@ -22,6 +22,19 @@ var htmlEncode = function (str) {
     return '&#' + c.charCodeAt(0) + ';';
   });
 };
+
+var formattedDate = function(date) {
+  var date = new Date(date);
+  let year = date.getFullYear();
+  let month = (1 + date.getMonth()).toString().padStart(2, '0');
+  let day = date.getDate().toString().padStart(2, '0');
+  let hours = date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+  let amPm = date.getHours() >= 12 ? 'PM' : 'AM';
+  hours = hours < 10 ? '0' + hours : hours;
+  let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+  return `${month}-${day}-${year} ${hours}:${minutes} ${amPm}`;
+};
+
 
 /*
 BEFORE SANITIZE:
