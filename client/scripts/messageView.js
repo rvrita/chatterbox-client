@@ -11,9 +11,6 @@ var MessageView = {
         <div class="roomname">
         <%= roomname %>
         </div>
-        <div class="timestamp">
-          <%= formattedDate(createdAt) %>
-        </div>
       </div>
     `)
 };

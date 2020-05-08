@@ -15,78 +15,49 @@ var App = {
     App.startSpinner();
     App.fetch(App.stopSpinner);
 
-    $('#refresh').on('click', App.fetch);
-    // $('select option:selected').on('click', function() {
-    //   alert('hi');
-    // });
+    $('#refresh').on('click', App.handleRefresh);
+  },
+
+  handleRefresh: function() {
+    var currentRoom = RoomsView.$select.val();
+    console.log('current room from app.js: ', currentRoom);
+    App.fetch();
+    RoomsView.handleChangeRoom(currentRoom);
   },
 
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
-      // examine the response from the server request:
       console.log(data);
       $('#chats').empty();
       $('#rooms select').empty();
-      var html = '';
-      var roomHtml = '';
       var roomObj = {};
       var roomArray = [];
       var roomArrayTwo = [];
       for (var i = 0; i < data.results.length; i++) {
         const username = data.results[i].username;
         const text = data.results[i].text;
-        const roomname = data.results[i].roomname;
+        var roomname = data.results[i].roomname;
+        roomname = roomname !== undefined ? roomname.trim() : roomname;
         if (!roomArray.includes(roomname) && roomname !== '' && roomname !== undefined) {
-          roomArray.push(roomname.trim());
+          roomArray.push(roomname);
         }
         if (username !== undefined && text !== undefined && roomname !== undefined) {
-          html += MessageView.render(data.results[i]);
+          MessagesView.renderMessage(data.results[i]);
         }
       }
-      $('#chats').append(html);
       for (var r = 0; r < roomArray.length; r++) {
         var roomObj = {
           roomname: roomArray[r]
         };
         roomArrayTwo.push(roomObj);
-        roomHtml += RoomsView.render(roomArrayTwo[r]);
+        RoomsView.renderRoom(roomArrayTwo[r]);
       }
-      $('#rooms select').append(roomHtml);
-      console.log(roomArrayTwo);
+      Messages.messages = data.results;
       callback();
     });
   },
 
 
-  // filterByRoom: function() {
-  //   Parse.readAll((data) => {
-  //     $('#chats').empty();
-  //     $('#rooms select').empty();
-  //     var html = '';
-  //     for (var i = 0; i < data.results.length; i++) {
-  //       const username = data.results[i].username;
-  //       const text = data.results[i].text;
-  //       const roomname = data.results[i].roomname.trim();
-  //       if (!roomArray.includes(roomname) && roomname !== '' && roomname !== undefined) {
-  //         roomArray.push(roomname);
-  //       }
-  //       if (username !== undefined && text !== undefined && roomname !== undefined) {
-  //         html += MessageView.render(data.results[i]);
-  //       }
-  //     }
-  //     $('#chats').append(html);
-  //     for (var r = 0; r < roomArray.length; r++) {
-  //       var roomObj = {
-  //         roomname: roomArray[r]
-  //       };
-  //       roomArrayTwo.push(roomObj);
-  //       roomHtml += RoomsView.render(roomArrayTwo[r]);
-  //     }
-  //     $('#rooms select').append(roomHtml);
-  //     console.log(roomArrayTwo);
-  //     callback();
-  //   });
-  // },
 
 
   startSpinner: function() {
