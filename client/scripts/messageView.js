@@ -8,12 +8,17 @@ var MessageView = {
         <div class="message">
         <%= htmlEncode(text) %>
         </div>
+        <div class="roomname">
+        <%= roomname %>
+        </div>
         <div class="timestamp">
           <%= formattedDate(createdAt) %>
         </div>
       </div>
     `)
 };
+
+
 
 var htmlEncode = function (str) {
   // slice string and limit 280 characters from displaying

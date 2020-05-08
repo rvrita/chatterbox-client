@@ -1,12 +1,12 @@
 var RoomsView = {
 
-  $button: $('#rooms button'),
+  $button: $('#rooms #add-room'),
   $select: $('#rooms select'),
-  $submit: $('#form room-submit'),
+  $form: $('#room-send'),
 
   initialize: function() {
     RoomsView.$button.on('click', RoomsView.addRoom);
-    RoomsView.$submit.on('click', RoomsView.roomSubmit);
+    RoomsView.$form.on('submit', RoomsView.roomSubmit);
   },
 
 
@@ -17,13 +17,16 @@ var RoomsView = {
   },
   roomSubmit: function(event) {
     event.preventDefault();
-    alert('hi');
+    var roomName = {
+      roomname: document.getElementById('room').value
+    };
+    Parse.createRoom(roomName);
   },
 
 
 
   render: _.template(
-    `<option value="<%= roomname %>">
+    `<option id="<%= roomname %>" value="<%= roomname %>">
       <%= roomname %>
     </option>
     `

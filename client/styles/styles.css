@@ -47,9 +47,8 @@ body {
 }
 
 form {
-    padding: 20px;
+    padding: 10px;
     padding-left: 0;
-    margin-bottom: 20px;
 }
 #room {
     display: none;

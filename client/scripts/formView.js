@@ -1,6 +1,6 @@
 var FormView = {
 
-  $form: $('form'),
+  $form: $('#send'),
 
   initialize: function() {
     FormView.$form.on('submit', FormView.handleSubmit);
@@ -9,15 +9,15 @@ var FormView = {
   handleSubmit: function(event) {
     // Stop the browser from submitting the form
     event.preventDefault();
+    var roomname = $('select option:selected').text();
     var message = {
       username: App.username,
       text: FormView.$form.find('#message').val(),
-      roomname: 'rrroom'
+      roomname: roomname
     };
     if (message.text && message.username) {
       Parse.create(message);
     }
-    console.log('click!');
   },
 
   setStatus: function(active) {

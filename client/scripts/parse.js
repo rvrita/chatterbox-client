@@ -16,6 +16,20 @@ var Parse = {
       }
     });
   },
+  createRoom: function(roomName) {
+    $.ajax({
+      url: Parse.server,
+      type: 'POST',
+      data: JSON.stringify(roomName),
+      contentType: 'application/json',
+      success: function (data) {
+        console.log('Room Created!');
+      },
+      error: function (data) {
+        console.error('Failed to create room!', data);
+      }
+    });
+  },
 
   readAll: function(successCB, errorCB = null) {
     $.ajax({
