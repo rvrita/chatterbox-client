@@ -1,6 +1,7 @@
 var MessagesView = {
 
   $chats: $('#chats'),
+  $chat: $('#chat'),
 
   initialize: function() {
     MessagesView.$chats.on('click', function(event) {
@@ -13,18 +14,19 @@ var MessagesView = {
     });
   },
 
-  render: function() {
+  render: function(message) {
     MessagesView.$chats.empty();
-    var messages = Messages.messages;
-    for (var i = 0; i < messages.length; i++) {
-      const username = messages[i].username;
-      const text = messages[i].text;
-      var roomname = messages[i].roomname;
-      if (username !== undefined && text !== undefined && roomname !== undefined) {
-        MessagesView.renderMessage(messages[i]);
+    if (message) {
+      for (var i = 0; i < message.length; i++) {
+        const username = message[i].username;
+        const text = message[i].text;
+        var roomname = message[i].roomname;
+        if (username !== undefined && text !== undefined && roomname !== undefined) {
+          MessagesView.renderMessage(message[i]);
+        }
       }
+      RoomsView.handleChangeRoom();
     }
-    RoomsView.handleChangeRoom(currentRoom);
   },
 
   renderMessage: function(message) {

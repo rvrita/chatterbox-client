@@ -1,13 +1,15 @@
 var RoomsView = {
 
-  $button: $('#rooms #add-room'),
+  $button: $('#rooms button'),
   $select: $('#rooms select'),
   $selected: $('#rooms select option:selected'),
   $form: $('#room-send'),
+  $addRoomButton: $('#rooms #add-room-production'),
 
   initialize: function() {
-    RoomsView.$button.on('click', RoomsView.addRoom);
+    RoomsView.$addRoomButton.on('click', RoomsView.addRoom);
     RoomsView.$form.on('submit', RoomsView.roomSubmit);
+    RoomsView.$button.on('click', Rooms.add);
     RoomsView.$select.on('change', RoomsView.handleChangeRoom);
   },
 

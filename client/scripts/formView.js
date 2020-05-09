@@ -16,11 +16,11 @@ var FormView = {
       roomname: roomname
 
     };
-    if (message.text && message.username) {
+    if (document.getElementById('message').value) {
       Parse.create(message);
+      App.fetch();
+      $('#send').children('#message').val('');
     }
-    App.fetch();
-    $('#send').children('#message').val('');
   },
 
   setStatus: function(active) {

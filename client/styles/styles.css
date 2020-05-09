@@ -58,6 +58,10 @@ form {
     display: none;
 }
 
+#add-room {
+    display: none;
+}
+
 form input[type=text] {
     margin-right: 10px;
     width: 70%;

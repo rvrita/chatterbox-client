@@ -27,7 +27,6 @@ var App = {
 
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
-      console.log('my data: ', data);
       $('#chats').empty();
       currentRoom = RoomsView.$select.val();
       Messages.messages = data.results;
