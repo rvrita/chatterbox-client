@@ -20,6 +20,7 @@ var FormView = {
       Parse.create(message);
     }
     App.fetch();
+    $('#send').children('#message').val('');
   },
 
   setStatus: function(active) {

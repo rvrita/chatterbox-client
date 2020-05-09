@@ -35,6 +35,7 @@ var RoomsView = {
     }
 
     Parse.createRoom(roomName);
+    $('#room-send').children('#room-text').val('');
     App.fetchRoom();
   },
 
@@ -57,17 +58,16 @@ var RoomsView = {
 
   handleChangeRoom: function(currentRoom) {
     var currentRoom = RoomsView.$select.val();
-    console.log('current room from roomsView: ', currentRoom);
     var filtered = Messages.messages.filter(message => message.roomname === currentRoom);
     $('#chats').empty();
+    // console.log(MessagesView.$chats.children.length);
     for (var i = 0; i < filtered.length; i++) {
       const message = filtered[i];
       if (message.username && message.text && message.roomname) {
         MessagesView.renderMessage(filtered[i]);
+      } else if (MessagesView.$chats.children().length === 0) {
+        MessagesView.renderEmpty();
       }
     }
   }
-
-
-
 };

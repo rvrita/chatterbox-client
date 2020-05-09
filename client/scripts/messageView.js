@@ -1,16 +1,21 @@
 var MessageView = {
 
   render: _.template(`
+    <div class="<%= classNames %>">
+      <div class="username"><%= htmlEncode(username) %></div>
+      <div class="message">
+      <%= htmlEncode(text) %>
+      </div>
+      <div class="roomname">
+      <%= roomname %>
+      </div>
+    </div>
+  `),
+
+
+  renderEmpty: _.template(`
       <div class="chat">
-        <div class="username">
-          <%= htmlEncode(username) %>
-        </div>
-        <div class="message">
-        <%= htmlEncode(text) %>
-        </div>
-        <div class="roomname">
-        <%= roomname %>
-        </div>
+        <p>Be the first to say something!</p>
       </div>
     `)
 };

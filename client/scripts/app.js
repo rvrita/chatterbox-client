@@ -23,24 +23,15 @@ var App = {
 
   handleRefresh: function() {
     App.fetch();
-    App.fetchRoom();
   },
 
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
       console.log('my data: ', data);
       $('#chats').empty();
-      for (var i = 0; i < data.results.length; i++) {
-        const username = data.results[i].username;
-        const text = data.results[i].text;
-        var roomname = data.results[i].roomname;
-        if (username !== undefined && text !== undefined && roomname !== undefined) {
-          MessagesView.renderMessage(data.results[i]);
-
-        }
-      }
+      currentRoom = RoomsView.$select.val();
       Messages.messages = data.results;
-      RoomsView.handleChangeRoom();
+      MessagesView.render(Messages.messages);
       callback();
     });
   },
@@ -58,6 +49,7 @@ var App = {
           roomArray.push(roomname);
         }
       }
+      roomArray.sort();
       for (var r = 0; r < roomArray.length; r++) {
         var roomObj = {
           roomname: roomArray[r]
@@ -65,7 +57,9 @@ var App = {
         roomArrayTwo.push(roomObj);
         RoomsView.renderRoom(roomArrayTwo[r]);
       }
+      var currentRoom = RoomsView.$select.val();
       Messages.messages = data.results;
+      RoomsView.handleChangeRoom(currentRoom);
     });
   },
 
