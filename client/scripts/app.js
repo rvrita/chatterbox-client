@@ -14,35 +14,48 @@ var App = {
     // Fetch initial batch of messages
     App.startSpinner();
     App.fetch(App.stopSpinner);
+    App.fetchRoom();
+
+    setInterval(App.fetch, 30000);
 
     $('#refresh').on('click', App.handleRefresh);
   },
 
   handleRefresh: function() {
-    var currentRoom = RoomsView.$select.val();
-    console.log('current room from app.js: ', currentRoom);
     App.fetch();
-    RoomsView.handleChangeRoom(currentRoom);
+    App.fetchRoom();
   },
 
   fetch: function(callback = ()=>{}) {
     Parse.readAll((data) => {
-      console.log(data);
+      console.log('my data: ', data);
       $('#chats').empty();
+      for (var i = 0; i < data.results.length; i++) {
+        const username = data.results[i].username;
+        const text = data.results[i].text;
+        var roomname = data.results[i].roomname;
+        if (username !== undefined && text !== undefined && roomname !== undefined) {
+          MessagesView.renderMessage(data.results[i]);
+
+        }
+      }
+      Messages.messages = data.results;
+      RoomsView.handleChangeRoom();
+      callback();
+    });
+  },
+
+  fetchRoom: function() {
+    Parse.readAll((data) => {
       $('#rooms select').empty();
       var roomObj = {};
       var roomArray = [];
       var roomArrayTwo = [];
       for (var i = 0; i < data.results.length; i++) {
-        const username = data.results[i].username;
-        const text = data.results[i].text;
         var roomname = data.results[i].roomname;
         roomname = roomname !== undefined ? roomname.trim() : roomname;
         if (!roomArray.includes(roomname) && roomname !== '' && roomname !== undefined) {
           roomArray.push(roomname);
-        }
-        if (username !== undefined && text !== undefined && roomname !== undefined) {
-          MessagesView.renderMessage(data.results[i]);
         }
       }
       for (var r = 0; r < roomArray.length; r++) {
@@ -53,7 +66,6 @@ var App = {
         RoomsView.renderRoom(roomArrayTwo[r]);
       }
       Messages.messages = data.results;
-      callback();
     });
   },
 

@@ -24,7 +24,8 @@ var RoomsView = {
       roomname: document.getElementById('room-text').value.trim()
     };
     for (var i = 0; i < data.length; i++) {
-      const currentRoom = data[i].roomname.toLowerCase();
+      var currentRoom = data[i].roomname;
+      currentRoom = currentRoom !== undefined ? currentRoom.toLowerCase() : currentRoom;
       if (currentRoom !== undefined && currentRoom !== '') {
         if (roomName.roomname.toLowerCase() === currentRoom.trim()) {
           alert('Room Exists!');
@@ -34,6 +35,7 @@ var RoomsView = {
     }
 
     Parse.createRoom(roomName);
+    App.fetchRoom();
   },
 
   renderRoom: function(data) {
